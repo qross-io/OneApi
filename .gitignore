@@ -1,9 +1,6 @@
 # Compiled class file
 *.class
 
-# Log file
-*.log
-
 # BlueJ files
 *.ctxt
 
@@ -21,3 +18,35 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+.DS_Store
+.idea/
+*.pyc
+*.iml
+target/
+*.swp
+*.classpath
+*.project
+*.epoch
+*.lck
+*.log
+.settings/
+*.pyc
+*.idea/
+*.iml
+classes/
+.gradle/
+build/
+gradle/
+out/
+buildinfo.properties
+argfile*
+dubbo-consumer/
+/target
+/project/project
+/project/target
+
+
+.vscode
+gradlew
+gradlew.bat
+setings.gradle
