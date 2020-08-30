@@ -14,9 +14,9 @@ public class OneApiApplication {
 		SpringApplication.run(OneApiApplication.class, args);
 	}
 
-	//使用 Voyager 模板引擎
-	@Bean
-	public VoyagerResolver initVoyagerResolver(){
-		return new VoyagerResolver();
-	}
+	//使用 Voyager模板引擎
+	//@Bean
+	//public VoyagerResolver initVoyagerResolver(){
+	//	return new VoyagerResolver();
+	//}
 }

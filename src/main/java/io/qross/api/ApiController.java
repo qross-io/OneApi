@@ -3,57 +3,81 @@ package io.qross.api;
 import io.qross.app.OneApi;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ApiController {
 
-    //默认接口
-    @RequestMapping("/{name}")
-    public Object OneApi(@PathVariable("name") String name) {
-        return OneApi.request("default/" + name);
-    }
-
     //根目录
-    @RequestMapping("/{group}/{name}")
-    public Object OneApi(@PathVariable("group") String group, @PathVariable("name") String name) {
-        return OneApi.request(group + "/" + "name");
+    @RequestMapping("/api/{name}")
+    public Object OneApi(@PathVariable("name") String name) {
+        return OneApi.request("/api/default/" + name);
     }
 
     //一层目录
-    @RequestMapping("/{module}/{group}/{name}")
-    public Object OneApi(@PathVariable("module") String module, @PathVariable("group") String group, @PathVariable("name") String name) {
-        return OneApi.withJsonParameters().request(module + "/" + group + "/" + name);
+    @RequestMapping("/api/{group}/{name}")
+    public Object OneApi(@PathVariable("group") String group, @PathVariable("name") String name) {
+        return OneApi.request("/api/" + group + "/" + name);
     }
 
     //两层目录
-    @RequestMapping("/{module1}/{module2}/{group}/{name}")
-    public Object OneApi(@PathVariable("module1") String module1, @PathVariable("module2") String module2, @PathVariable("group") String group, @PathVariable("name") String name) {
-        return OneApi.request(module1 + "/" + module2 + "/" + group + "/" + name);
+    @RequestMapping("/api/{module}/{group}/{name}")
+    public Object OneApi(@PathVariable("module") String module, @PathVariable("group") String group, @PathVariable("name") String name) {
+        return OneApi.request("/api/" + module + "/" + group + "/" + name);
     }
 
-    //其他路径格式
-    @RequestMapping("/api/{group}/{name}")
-    public Object OneApiCustomPath(@PathVariable("group") String group, @PathVariable("name") String name) {
-        return OneApi.request(group + "/" + "name");
-    }
-
-    //传递Json参数
-    @RequestMapping("/json/{group}/{name}")
-    public Object OneApiWithJson(@PathVariable("group") String group, @PathVariable("name") String name) {
-        return OneApi.withJsonParameters().request(group + "/" + "name");
-    }
-
-    //用户登录信息, 可在PQL内使用 @userid, @username, @role
+    //用户登录信息, 可在PQL中可使用全局变量 @userid, @username, @role
     @RequestMapping("/user/{group}/{name}")
     public Object OneApiAuth(@PathVariable("group") String group, @PathVariable("name") String name) {
-        return OneApi.signIn(1, "username", "role").request(group + "/" + "name");
+        return OneApi.signIn(1, "ted", "monitor").request("/api/" + group + "/" + "name");
     }
 
-    //刷新所有接口, 如果是在数据库中配置接口, 可通过这个接口随时刷新则无需停机
+    // 获取动态Token
+    @RequestMapping("/oneapi/secret")
+    public Object OneApiSecret(@RequestParam("token") String token) {
+        return OneApi.getSecretKey(token);
+    }
+
+    //刷新所有接口, 如果是在数据库中配置接口, 可通过这个接口随时刷新则无需重启项目
     @RequestMapping("/oneapi/refresh")
-    public Object OneApiRefresh() {
-        return OneApi.refresh();
+    public Object OneApiRefresh(@RequestParam("key") String key) {
+        if (OneApi.authenticateManagementKey(key)) {
+            return OneApi.refresh();
+        }
+        else {
+            return "Access denied!";
+        }
+    }
+
+    @RequestMapping("/oneapi/all")
+    public Object OneApiAll(@RequestParam("key") String key) {
+        if (OneApi.authenticateManagementKey(key)) {
+            return OneApi.getAll();
+        }
+        else {
+            return "Access denied!";
+        }
+    }
+
+    @RequestMapping("/oneapi/settings")
+    public Object OneApiSettings(@RequestParam("key") String key) {
+        if (OneApi.authenticateManagementKey(key)) {
+            return OneApi.getSettings();
+        }
+        else {
+            return "Access denied!";
+        }
+    }
+
+    @RequestMapping("/oneapi/logic")
+    public Object OneApiLogic(@RequestParam("path") String path, @RequestParam("method") String method, @RequestParam("key") String key) {
+        if (OneApi.authenticateManagementKey(key)) {
+            return OneApi.pick(path, method);
+        }
+        else {
+            return "Access denied!";
+        }
     }
 
     //生成token
