@@ -32,7 +32,8 @@ repositories {
 			username 'PtbpNI'
 			password 'kwCz3C0wHx'
 		}
-		url "https://packages.aliyun.com/maven/repository/2011186-snapshot-FSoDsK/"
+		//url "https://packages.aliyun.com/maven/repository/2011186-snapshot-FSoDsK/"
+		url "https://packages.aliyun.com/maven/repository/2011186-release-Aa5YmC/"
     }
 	jcenter()
 	mavenCentral()
@@ -44,6 +45,6 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-aop')
 	//runtime('org.springframework.boot:spring-boot-devtools')
 
-    compile group: 'io.qross', name: 'pql', version: '0.6.4-40-SNAPSHOT'
+    compile group: 'io.qross', name: 'pql', version: '0.6.4-1-RELEASE'
 	compile group: 'redis.clients', name: 'jedis', version: '3.3.0'
 }
