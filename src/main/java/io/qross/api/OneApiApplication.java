@@ -15,8 +15,8 @@ public class OneApiApplication {
 	}
 
 	//使用 Voyager模板引擎
-	//@Bean
-	//public VoyagerResolver initVoyagerResolver(){
-	//	return new VoyagerResolver();
-	//}
+	@Bean
+	public VoyagerResolver initVoyagerResolver(){
+		return new VoyagerResolver();
+	}
 }

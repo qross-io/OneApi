@@ -1,10 +1,10 @@
 package io.qross.api;
 
 import io.qross.app.OneApi;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import io.qross.net.Http;
+import io.qross.net.Json;
+import io.qross.pql.PQL;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ApiController {
@@ -31,6 +31,20 @@ public class ApiController {
     @RequestMapping("/user/{group}/{name}")
     public Object OneApiAuth(@PathVariable("group") String group, @PathVariable("name") String name) {
         return OneApi.signIn(1, "ted", "monitor").request("/api/" + group + "/" + "name");
+    }
+
+    @RequestMapping(value = "/api/cogo/cross", method = { RequestMethod.POST, RequestMethod.DELETE, RequestMethod.GET, RequestMethod.PUT })
+    public Object crossDomain(@RequestParam(value = "method") String method, @RequestParam(value = "url") String url, @RequestParam(value = "data") String data) {
+        return Json.fromText(new Http(method, url, data).request()).findNode("/");
+    }
+
+    @RequestMapping(value = "/api/cogo/pql", method = { RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE })
+    public Object runPQL(@RequestParam(value = "statement") String statement) {
+        String pql = statement.replace("&lt;", "<")
+                .replace("&gt;", ">")
+                .replace("&amp;", "&");
+
+        return PQL.open(pql).run();
     }
 
     // 获取动态Token
@@ -80,7 +94,7 @@ public class ApiController {
         }
     }
 
-    //生成token
+    //生成 token
     @RequestMapping("/oneapi/token")
     public Object OneApiToken() {
         return OneApi.getToken(32);

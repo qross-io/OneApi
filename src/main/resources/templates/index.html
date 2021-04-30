@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Qross OneApi Documents</title>
+    <script type="text/javascript" src="@/root.js"></script>
+    <script type="text/javascript" src="@/root.model.js"></script>
+    <script type="text/javascript" src="@/root.input.js"></script>
+    <link href="@/css/root/main.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    .catalog-frame { width: 300px; float: left; background-image: linear-gradient(to bottom, #EEEEEE, #FFFFFF); border-right: 1px solid #FFFFFF; }
+    .catalog-head { padding: 6px 12px; border-top: 1px solid #FFFFFF; border-bottom: 1px solid #999999; }
+    .catalog-body { padding: 0px; border-top: 1px solid #FFFFFF; }
+    .work-frame { margin-left: 301px; border-left: 1px solid #999999; padding-left: 10px; margin-right: 1px; }
+
+    .top { border-top: 1px solid var(--primary); border-bottom: 1px solid #999999; height: 2.5rem; background-color: #EEEEEE; }
+    .logo { font-size: 1.25rem; font-weight: bold; float: left; padding: 5px 20px; color: var(--primary); }
+    .nav { font-size: 1rem; float: left; padding: 8px 40px; font-size: 0.875rem; float: right; }
+    .nav a { margin-left: 30px; }
+    .filter { padding: 3px 5px; }
+
+    .api { margin: 5px 10px; font-size: 0.875rem; padding: 6px 5px 8px 5px; font-weight: bold; border-bottom: 1px dashed #DDDDDD; line-height: 200%; }
+    .api b { color: #666666; font-weight: normal; }
+    </style>
+</head>
+<body self-adaption="#CatalogDiv,#WorkFrame">
+<div class="top">
+    <div class="logo"><span class="f18 bold">io.Qross</span> <span class="f16" style="color: #666666;">OneApi Documents</span></div>
+    <div class="nav">
+        <a href="http://www.qross.cn/oneapi" target="_blank">OneApi 开发文档</a>
+        <a href="http://www.qross.cn/pql" target="_blank">PQL 开发文档</a>
+    </div>
+</div>
+<div id="CatalogDiv" class="catalog-frame">
+    <div class="catalog-head"><input id="Filter" class="filter" type="text" value="/api/" size="35" onmodify="console.log(this.value)" /> </div>
+    <div class="catalog-body">
+        <template reload-on="modify:#Filter" data="OPEN QROSS; SELECT * FROM qross_api_in_one WHERE path LIKE '$(#Filter)~{'%'}' ORDER BY path ASC LIMIT 20" as="list">
+            <div class="api">
+                <if test="'@[title]' != ''">
+                    &nbsp;<b class="f16">@[title]</b> <br/>
+                </if>
+                <a href="/oneapi/doc/detail?id=@[id]" target="Detail"><b>@[method]:</b> ~{ '@[path]'.replace('$(#Filter)'.$p(), '<b>$(#Filter)!</b>'.$p())  }</a>
+            </div>
+        </template>
+    </div>
+</div>
+<div id="WorkFrame" class="work-frame">
+    <iframe id="Detail" name="Detail" width="100%" height="100%" frameborder="0" scrolling="auto" src="http://www.qross.cn/doc/oneapi/general"></iframe>
+</div>
+</body>
+</html>
