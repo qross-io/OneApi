@@ -18,7 +18,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'io.qross'
-version = '1.7.0'
+version = '1.8.0'
 sourceCompatibility = 1.8
 
 archivesBaseName = "qross-oneapi"
@@ -26,13 +26,6 @@ archivesBaseName = "qross-oneapi"
 repositories {
 	maven{
 		url "https://maven.aliyun.com/repository/public/"
-	}
-	maven{
-		credentials {
-			username 'PtbpNI'
-			password 'kwCz3C0wHx'
-		}
-		url "https://packages.aliyun.com/maven/repository/2011186-snapshot-FSoDsK/"
 	}
 	mavenCentral()
 	jcenter()
@@ -44,6 +37,6 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-aop')
 
 	//compile (group: 'io.qross', name: 'pql', version: '1.5.38-SNAPSHOT')
-	compile group: 'io.qross', name: 'pql', version: '1.7.0'
+	compile group: 'io.qross', name: 'pql', version: '1.8.0'
 	compile group: 'redis.clients', name: 'jedis', version: '3.3.0'
 }
