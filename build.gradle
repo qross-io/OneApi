@@ -37,6 +37,6 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-aop')
 
 	//compile (group: 'io.qross', name: 'pql', version: '1.5.38-SNAPSHOT')
-	compile group: 'io.qross', name: 'pql', version: '2.4.0'
+	compile group: 'io.qross', name: 'pql', version: '2.5.0'
 	compile group: 'redis.clients', name: 'jedis', version: '3.3.0'
 }
